@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: vyro
+    runtime: node
+    plan: 0.5c-512mb
+    buildCommand: npm install --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.19.0
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: VYRO_DATABASE_PATH
+        value: /var/data/vyro.sqlite
+      - key: VYRO_UPLOAD_DIR
+        value: /var/data/uploads
+      - key: CORS_ORIGINS
+        sync: false
+    disk:
+      name: vyro-data
+      mountPath: /var/data
+      sizeGB: 1
